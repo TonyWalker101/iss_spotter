@@ -29,6 +29,11 @@ const fetchCoordsByIP = (ip, callback) => {
       return callback(err, null);
     }
 
+    if (response.statusCode !== 200) {
+      let msg = `Status code ${response.statusCode} when fetching geolocation. Response: ${body}`;
+      return callback(Error(msg), null);
+    }
+
     let data = {};
     data["latitude"] = JSON.parse(body).latitude;
     data["longitude"] = JSON.parse(body).longitude;
