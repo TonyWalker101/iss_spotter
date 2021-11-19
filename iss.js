@@ -21,4 +21,23 @@ const fetchMyIP = callback => {
 
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = (ip, callback) => {
+  request(`https://api.freegeoip.app/json/${ip}?apikey=c54efde0-4971-11ec-9ff4-595af58794aa`, (error, response, body) => {
+
+    if (error) {
+      let err = `Something went wrong with ${error.hostname}`;
+      return callback(err, null);
+    }
+
+    let data = {};
+    data["latitude"] = JSON.parse(body).latitude;
+    data["longitude"] = JSON.parse(body).longitude;
+
+    return callback(null, data);
+  });
+};
+
+module.exports = {
+  fetchMyIP,
+  fetchCoordsByIP
+};
