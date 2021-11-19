@@ -1,5 +1,5 @@
 // Makes an API request to retrieve the user's IP address
-const { fetchMyIP, fetchCoordsByIP } = require("./iss");
+const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require("./iss");
 
 fetchMyIP((err,ip) => {
 
@@ -16,7 +16,11 @@ fetchMyIP((err,ip) => {
       return;
     }
     console.log("It worked! Returned Data: ", data);
-
+    
+    fetchISSFlyOverTimes(data, (err, data) => {
+      console.log("Test");
+    });
+    
   });
 
 });
