@@ -15,14 +15,14 @@ fetchMyIP((err,ip) => {
       console.log("It didn't work!", err);
       return;
     }
-    console.log("It worked! Returned Data: ", data);
+    console.log("It worked! Returned Geolocation: ", data);
     
     fetchISSFlyOverTimes(data, (err, flyTimes) => {
       if (err) {
         console.log("It didn't work!", err);
         return;
       }
-      console.log("It worked! Returned Fly Times: ", flyTimes);
+      console.log("It worked! Returned Fly Times:\n", flyTimes);
     });
 
   });
