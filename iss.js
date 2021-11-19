@@ -3,16 +3,20 @@
 const request = require("request");
 
 const fetchMyIP = callback => {
+
   request("https://api.ipify.org?format=json", (error, response, body) => {
     
     if (error) {
-      console.log("Error with site", error.hostname);
-    };
-    if (response.statusCode !== 200) {
-      console.log("Abnormal status code received: ", response.statusCode);
+      let err = `Error with site ${error.hostname}`;
+      return callback(err, null);
     }
-    console.log(body);
-  })
-}
+    // if (response.statusCode !== 200) {
+    //   console.log("Abnormal status code received: ", response.statusCode);
+    // }
+    let ip = body;
+    return callback(null, ip);
+  });
+
+};
 
 module.exports = { fetchMyIP };
