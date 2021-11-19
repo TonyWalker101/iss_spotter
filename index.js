@@ -1,4 +1,4 @@
-// Makes an API request to retrieve the user's IP address
+// Makes API requests to determine ISS pass over times
 
 const { nextISSTimesForMyLocation } = require("./iss");
 
