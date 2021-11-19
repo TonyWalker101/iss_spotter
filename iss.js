@@ -13,7 +13,7 @@ const fetchMyIP = callback => {
     // if (response.statusCode !== 200) {
     //   console.log("Abnormal status code received: ", response.statusCode);
     // }
-    let ip = body;
+    let ip = JSON.parse(body);
     return callback(null, ip);
   });
 
