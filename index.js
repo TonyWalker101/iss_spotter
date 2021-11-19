@@ -17,10 +17,14 @@ fetchMyIP((err,ip) => {
     }
     console.log("It worked! Returned Data: ", data);
     
-    fetchISSFlyOverTimes(data, (err, data) => {
-      console.log("Test");
+    fetchISSFlyOverTimes(data, (err, flyTimes) => {
+      if (err) {
+        console.log("It didn't work!", err);
+        return;
+      }
+      console.log("It worked! Returned Fly Times: ", flyTimes);
     });
-    
+
   });
 
 });
