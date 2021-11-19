@@ -10,9 +10,11 @@ const fetchMyIP = callback => {
       let err = `Error with site ${error.hostname}`;
       return callback(err, null);
     }
-    // if (response.statusCode !== 200) {
-    //   console.log("Abnormal status code received: ", response.statusCode);
-    // }
+    if (response.statusCode !== 200) {
+      let err = `Abnormal status code received: ${response.statusCode})`;
+      return callback(err, null);
+    }
+
     let ip = JSON.parse(body);
     return callback(null, ip);
   });
