@@ -1,30 +1,19 @@
 // Makes an API request to retrieve the user's IP address
-const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require("./iss");
 
-fetchMyIP((err,ip) => {
+const { nextISSTimesForMyLocation } = require("./iss");
 
-  if (err) {
-    console.log("It didn't work!", err);
-    return;
+const printPassTimes = passTimes => {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} duration seconds!`);
   }
-  console.log("It worked! Returned IP: ", ip);
-  
-  fetchCoordsByIP(ip, (err, data) => {
-  
-    if (err) {
-      console.log("It didn't work!", err);
-      return;
-    }
-    console.log("It worked! Returned Geolocation: ", data);
-    
-    fetchISSFlyOverTimes(data, (err, flyTimes) => {
-      if (err) {
-        console.log("It didn't work!", err);
-        return;
-      }
-      console.log("It worked! Returned Fly Times:\n", flyTimes);
-    });
+};
 
-  });
-
+nextISSTimesForMyLocation((error, passTimes) => {
+  if (error) {
+    return console.log("It didn't work!", error);
+  }
+  printPassTimes(passTimes);
 });
