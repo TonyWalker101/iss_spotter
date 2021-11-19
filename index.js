@@ -5,9 +5,7 @@ fetchMyIP((err,ip) => {
 
   if (err) {
     console.log("It didn't work!", err);
-    return "Did not work";
-  } else {
-    console.log("It worked! Returned IP: ", ip);
+    return;
   }
-
+  console.log("It worked! Returned IP: ", ip);
 });
