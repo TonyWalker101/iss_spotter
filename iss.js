@@ -1,4 +1,4 @@
-// Makes an API request to retrieve the user's IP address
+// Function makes an API request to retrieve the user's IP address
 
 const request = require("request");
 
@@ -21,6 +21,8 @@ const fetchMyIP = callback => {
 
 };
 
+// Functions uses IP retrieved from fetchMyIP to retrieve geolocation
+
 const fetchCoordsByIP = (ip, callback) => {
   request(`https://api.freegeoip.app/json/${ip}?apikey=c54efde0-4971-11ec-9ff4-595af58794aa`, (error, response, body) => {
 
@@ -42,6 +44,8 @@ const fetchCoordsByIP = (ip, callback) => {
   });
 };
 
+// Function uses geolocation from fetchCoordsByIP to retrieve ISS fly times
+
 const fetchISSFlyOverTimes = (coords, callback) => {
   request(`https://iss-pass.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
 
@@ -60,8 +64,29 @@ const fetchISSFlyOverTimes = (coords, callback) => {
   });
 };
 
+const nextISSTimesForMyLocation = callback => {
+
+  fetchMyIP((error, ip) => {
+    if (error) {
+      return callback(error, null);
+    }
+    fetchCoordsByIP(ip, (error, loc) => {
+      if (error) {
+        return callback(error, null);
+      }
+      fetchISSFlyOverTimes(loc, (error, nextPasses) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, nextPasses);
+      });
+    });
+  });
+};
+
 module.exports = {
   fetchMyIP,
   fetchCoordsByIP,
-  fetchISSFlyOverTimes
+  fetchISSFlyOverTimes,
+  nextISSTimesForMyLocation
 };
