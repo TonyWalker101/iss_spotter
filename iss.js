@@ -11,8 +11,8 @@ const fetchMyIP = callback => {
       return callback(err, null);
     }
     if (response.statusCode !== 200) {
-      let err = `Abnormal status code received: ${response.statusCode})`;
-      return callback(err, null);
+      let msg = `Status code ${response.statusCode} when fetching IP. Response: ${body}`;
+      return callback(Error(msg), null);
     }
 
     let ip = JSON.parse(body);
